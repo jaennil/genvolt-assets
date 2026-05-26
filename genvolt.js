@@ -1,6 +1,6 @@
-/* Genvolt external Tilda bundle. Built 2026-05-26T09:41:51.866Z. */
+/* Genvolt external Tilda bundle. Built 2026-05-26T09:47:58.573Z. */
 (function(){
-  var VERSION="20260526094151";
+  var VERSION="20260526094758";
   if(window.GV_EXTERNAL_BUNDLE_VERSION===VERSION)return;
   window.GV_EXTERNAL_BUNDLE_VERSION=VERSION;
   function addStyle(id, css) {
@@ -296,6 +296,9 @@
         install();
         var count=0,timer=setInterval(function(){install();if(++count>120)clearInterval(timer)},500);
         new MutationObserver(function(mutations){if(mutationIsRelevant(mutations))requestAnimationFrame(install)}).observe(document.documentElement,{childList:true,subtree:true});
+        ['click','touchstart','pointerup'].forEach(function(type){
+          document.addEventListener(type,function(){setTimeout(install,60)},true);
+        });
       }
       window.GVCharsWidgetPoc={install:install,closeTip:closeTip,version:'poc-1'};
       bind();
