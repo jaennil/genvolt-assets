@@ -1,6 +1,6 @@
-/* Genvolt external Tilda bundle. Built 2026-05-26T08:24:25.105Z. */
+/* Genvolt external Tilda bundle. Built 2026-05-26T09:32:38.778Z. */
 (function(){
-  var VERSION="20260526082425";
+  var VERSION="20260526093238";
   if(window.GV_EXTERNAL_BUNDLE_VERSION===VERSION)return;
   window.GV_EXTERNAL_BUNDLE_VERSION=VERSION;
   function addStyle(id, css) {
@@ -222,8 +222,11 @@
         return '<div class="gvw-char-widget" data-gvw-ready="1">'+html+'</div>';
       }
       function findHost(root){
-        var panels=Array.prototype.slice.call(root.querySelectorAll('.gv-mobile-tab-panel,.t-catalog__tabs__content')).filter(visible);
-        var chars=panels.find(function(panel){return /характеристики|основные характеристики|мощность номинальная/i.test(c(panel.textContent))});
+        var panels=Array.prototype.slice.call(root.querySelectorAll('.gv-mobile-tab-panel,.t-catalog__tabs__content'));
+        var chars=panels.find(function(panel){
+          return panel.querySelector('.gv-char-row,.js-catalog-prod-all-charcs')
+            || /характеристики|основные характеристики|мощность номинальная|напряжение/i.test(c(panel.textContent));
+        });
         return chars||root.querySelector('.js-catalog-prod-all-charcs')||root;
       }
       function productRoot(){return Array.prototype.slice.call(document.querySelectorAll('.js-catalog-product')).find(visible)||document}
