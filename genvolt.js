@@ -1,6 +1,6 @@
-/* Genvolt external Tilda bundle. Built 2026-05-26T09:32:38.778Z. */
+/* Genvolt external Tilda bundle. Built 2026-05-26T09:41:51.866Z. */
 (function(){
-  var VERSION="20260526093238";
+  var VERSION="20260526094151";
   if(window.GV_EXTERNAL_BUNDLE_VERSION===VERSION)return;
   window.GV_EXTERNAL_BUNDLE_VERSION=VERSION;
   function addStyle(id, css) {
@@ -223,10 +223,8 @@
       }
       function findHost(root){
         var panels=Array.prototype.slice.call(root.querySelectorAll('.gv-mobile-tab-panel,.t-catalog__tabs__content'));
-        var chars=panels.find(function(panel){
-          return panel.querySelector('.gv-char-row,.js-catalog-prod-all-charcs')
-            || /характеристики|основные характеристики|мощность номинальная|напряжение/i.test(c(panel.textContent));
-        });
+        var chars=panels.find(function(panel){return panel.querySelector('.gv-char-row,.js-catalog-prod-all-charcs')});
+        if(!chars)chars=panels.find(function(panel){return /характеристики|основные характеристики|мощность номинальная/i.test(c(panel.textContent))});
         return chars||root.querySelector('.js-catalog-prod-all-charcs')||root;
       }
       function productRoot(){return Array.prototype.slice.call(document.querySelectorAll('.js-catalog-product')).find(visible)||document}
@@ -286,6 +284,7 @@
       }
       function mutationIsRelevant(mutations){
         return Array.prototype.some.call(mutations,function(mutation){
+          if(mutation.target&&mutation.target.closest&&mutation.target.closest('.js-catalog-product,.t-store__prod-popup,.js-store-prod-popup'))return true;
           return Array.prototype.some.call(mutation.addedNodes||[],function(node){
             if(node.nodeType!==1)return false;
             if(node.closest&&node.closest('.gvw-char-widget,.gvw-char-tip'))return false;
@@ -295,7 +294,7 @@
       }
       function start(){
         install();
-        var count=0,timer=setInterval(function(){install();if(++count>30)clearInterval(timer)},500);
+        var count=0,timer=setInterval(function(){install();if(++count>120)clearInterval(timer)},500);
         new MutationObserver(function(mutations){if(mutationIsRelevant(mutations))requestAnimationFrame(install)}).observe(document.documentElement,{childList:true,subtree:true});
       }
       window.GVCharsWidgetPoc={install:install,closeTip:closeTip,version:'poc-1'};
