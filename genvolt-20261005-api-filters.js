@@ -1123,6 +1123,9 @@
         var optionValues = checkboxOptions(itemByTitle('Тип топлива')).map(function (option) {
           return option.value;
         }).filter(Boolean);
+        if (apiRecord()) return fallback.map(function (value) {
+          return optionValues.find(function (option) { return compareText(option) === compareText(value); }) || value;
+        });
         return optionValues.length ? optionValues : fallback;
       }
 
